@@ -39,7 +39,13 @@ public class Dragon : MonoBehaviour
         rigidbody.velocity = velocity;
 
         if(Input.GetButtonDown("Horizontal")){
+
+            float temp = directionOfFlame;
             directionOfFlame = Input.GetAxisRaw("Horizontal");
+
+            if(directionOfFlame == 0){
+                directionOfFlame = temp;
+            }
         }
         
 
@@ -80,21 +86,55 @@ public class Dragon : MonoBehaviour
                 //shoot.GetComponent<Flame>().direction = direction;
                 shoot.GetComponent<Flame>().direction = directionOfFlame;
                 ShotFlames++;
-            }
+            } 
+           
 
         } else{
 
+            if(ShotFlames < maxFlames & Input.GetButtonDown("Fire1")){
+
+                
+
+                ShotFlames++;
+                ShotFlames++;
+                StartCoroutine(DoubleShot());
+
+
+            } 
         }
-        
-        
+    
         
     }
 
     void OnCollisionEnter2D(Collision2D col){
+
         if(col.gameObject.tag == "PowerUp"){
-            Debug.Log("Here");
+            isPowerUpActive = true;
+            maxFlames = 4;
+            StartCoroutine(PowerUpTimeUp());
             Destroy(col.gameObject);
         }
+    }
+
+
+    IEnumerator DoubleShot(){
+       
+        GameObject shoot = Instantiate(flame, transform.position, Quaternion.identity) as GameObject;
+        shoot.GetComponent<Flame>().direction = directionOfFlame;
+
+        yield return new WaitForSeconds(0.1f);        
+
+        GameObject shoot2 = Instantiate(flame, transform.position, Quaternion.identity) as GameObject;
+        shoot2.GetComponent<Flame>().direction = directionOfFlame;
+    }
+
+    IEnumerator PowerUpTimeUp(){
+        
+        yield return new WaitForSeconds(5);
+
+        maxFlames = 2;
+        isPowerUpActive = false;
+
     }
 
 }
