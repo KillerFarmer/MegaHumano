@@ -14,6 +14,8 @@ public class Dragon : MonoBehaviour
 
     public int maxFlames = 2;
 
+    private float directionOfFlame = 1;
+
     private Rigidbody2D rigidbody;
     private BoxCollider2D boxcollider;
 
@@ -36,6 +38,10 @@ public class Dragon : MonoBehaviour
         Vector2 velocity = new Vector2(movX, rigidbody.velocity.y);
         rigidbody.velocity = velocity;
 
+        if(Input.GetButtonDown("Horizontal")){
+            directionOfFlame = Input.GetAxisRaw("Horizontal");
+        }
+        
 
         Vector3 max = boxcollider.bounds.max;
         Vector3 min = boxcollider.bounds.min;
@@ -59,15 +65,20 @@ public class Dragon : MonoBehaviour
 
 
     void Update(){
+        
+        if(directionOfFlame == 0){
+            return;
+        }
 
         if(!isPowerUpActive){
 
             if(ShotFlames < maxFlames & Input.GetButtonDown("Fire1")){
 
-                float direction = Input.GetAxisRaw("Fire1");
+                //float direction = Input.GetAxisRaw("Fire1");
 
                 GameObject shoot = Instantiate(flame, transform.position, Quaternion.identity) as GameObject;
-                shoot.GetComponent<Flame>().direction = direction;
+                //shoot.GetComponent<Flame>().direction = direction;
+                shoot.GetComponent<Flame>().direction = directionOfFlame;
                 ShotFlames++;
             }
 
@@ -77,6 +88,13 @@ public class Dragon : MonoBehaviour
         
         
         
+    }
+
+    void OnCollisionEnter2D(Collision2D col){
+        if(col.gameObject.tag == "PowerUp"){
+            Debug.Log("Here");
+            Destroy(col.gameObject);
+        }
     }
 
 }
