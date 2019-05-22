@@ -10,6 +10,7 @@ public class Dragon : MonoBehaviour
     public float damageForce = 10.0f;
 
     public GameObject flame;
+    public GameObject poweUpFlame;
 
     public static int ShotFlames;
 
@@ -17,17 +18,19 @@ public class Dragon : MonoBehaviour
 
     private float directionOfFlame = 1;
 
-    private Rigidbody2D rigidbody;
+    private Rigidbody2D RigidBody;
     private BoxCollider2D boxcollider;
 
     private bool isPowerUpActive;
 
     private bool invensibilityByDamage = false;
 
+    private bool facingRight = true;
+
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        RigidBody = GetComponent<Rigidbody2D>();
         boxcollider = GetComponent<BoxCollider2D>();
 
         isPowerUpActive = false;
@@ -37,9 +40,12 @@ public class Dragon : MonoBehaviour
 
     void FixedUpdate(){
 
+    
         float movX = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-        Vector2 velocity = new Vector2(movX, rigidbody.velocity.y);
-        rigidbody.velocity = velocity;
+        Vector2 velocity = new Vector2(movX, RigidBody.velocity.y);
+        RigidBody.velocity = velocity;
+
+        FlipSprite();
 
         if(Input.GetButtonDown("Horizontal")){
 
@@ -65,9 +71,9 @@ public class Dragon : MonoBehaviour
             onGround = true;
         }
 
-        rigidbody.gravityScale = onGround && movX == 0 ? 0 : 1;
+        RigidBody.gravityScale = onGround && movX == 0 ? 0 : 1;
         if(onGround && Input.GetKeyDown(KeyCode.Space)){
-            rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            RigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             SoundManager.Instance.PlayOneShot(SoundManager.Instance.jump);
         }
 
@@ -97,8 +103,6 @@ public class Dragon : MonoBehaviour
 
             if(ShotFlames < maxFlames & Input.GetButtonDown("Fire1")){
 
-                
-
                 ShotFlames++;
                 ShotFlames++;
                 StartCoroutine(DoubleShot());
@@ -121,25 +125,24 @@ public class Dragon : MonoBehaviour
         } else if(col.gameObject.tag == "Enemy"){
 
             if(!invensibilityByDamage){
+
                 invensibilityByDamage = true;
                 SoundManager.Instance.PlayOneShot(SoundManager.Instance.damage);
-
-                
 
                 if(transform.position.x < col.transform.position.x){
 
                     Vector2 verticalImpulse = Vector2.up * damageForce;
-                    rigidbody.AddForce(verticalImpulse, ForceMode2D.Impulse);
+                    RigidBody.AddForce(verticalImpulse, ForceMode2D.Impulse);
 
-                    Vector2 horizontalImpulse = Vector2.right * damageForce; 
-                    rigidbody.AddForce( horizontalImpulse, ForceMode2D.Impulse);
+                    Vector2 horizontalImpulse = Vector2.right * damageForce * 100; 
+                    RigidBody.AddForce( horizontalImpulse, ForceMode2D.Impulse);
 
                 } else{
                     Vector2 verticalImpulse = Vector2.up * damageForce;
-                    rigidbody.AddForce(verticalImpulse, ForceMode2D.Impulse);
+                    RigidBody.AddForce(verticalImpulse, ForceMode2D.Impulse);
 
                     Vector2 horizontalImpulse = Vector2.left * damageForce; 
-                    rigidbody.AddForce( horizontalImpulse, ForceMode2D.Impulse);
+                    RigidBody.AddForce( horizontalImpulse, ForceMode2D.Impulse);
                 }
                 StartCoroutine(BecomeMortal());
             }
@@ -150,12 +153,12 @@ public class Dragon : MonoBehaviour
 
     IEnumerator DoubleShot(){
        
-        GameObject shoot = Instantiate(flame, transform.position, Quaternion.identity) as GameObject;
+        GameObject shoot = Instantiate(poweUpFlame, transform.position, Quaternion.identity) as GameObject;
         shoot.GetComponent<Flame>().direction = directionOfFlame;
 
         yield return new WaitForSeconds(0.1f);        
 
-        GameObject shoot2 = Instantiate(flame, transform.position, Quaternion.identity) as GameObject;
+        GameObject shoot2 = Instantiate(poweUpFlame, transform.position, Quaternion.identity) as GameObject;
         shoot2.GetComponent<Flame>().direction = directionOfFlame;
     }
 
@@ -172,6 +175,28 @@ public class Dragon : MonoBehaviour
         yield return new WaitForSeconds(2);
 
         invensibilityByDamage = false;
+    }
+
+
+    void FlipSprite(){
+
+        if(facingRight && RigidBody.velocity.x < 0){
+
+            Vector3 scale = transform.localScale;
+		    scale.x *= -1;
+		    transform.localScale = scale; 
+
+            facingRight = false;
+
+        } else if(!facingRight && RigidBody.velocity.x > 0){
+            Vector3 scale = transform.localScale;
+		    scale.x *= -1;
+		    transform.localScale = scale; 
+
+            facingRight = true;
+        }
+        
+
     }
 
 }
