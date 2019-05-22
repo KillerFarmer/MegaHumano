@@ -7,6 +7,7 @@ public class Dragon : MonoBehaviour
 
     public float speed = 250.0f;
     public float jumpForce = 12.0f;
+    public float damageForce = 10.0f;
 
     public GameObject flame;
 
@@ -20,6 +21,8 @@ public class Dragon : MonoBehaviour
     private BoxCollider2D boxcollider;
 
     private bool isPowerUpActive;
+
+    private bool invensibilityByDamage = false;
 
     // Start is called before the first frame update
     void Start()
@@ -65,6 +68,7 @@ public class Dragon : MonoBehaviour
         rigidbody.gravityScale = onGround && movX == 0 ? 0 : 1;
         if(onGround && Input.GetKeyDown(KeyCode.Space)){
             rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            SoundManager.Instance.PlayOneShot(SoundManager.Instance.jump);
         }
 
     }
@@ -113,6 +117,33 @@ public class Dragon : MonoBehaviour
             maxFlames = 4;
             StartCoroutine(PowerUpTimeUp());
             Destroy(col.gameObject);
+
+        } else if(col.gameObject.tag == "Enemy"){
+
+            if(!invensibilityByDamage){
+                invensibilityByDamage = true;
+                SoundManager.Instance.PlayOneShot(SoundManager.Instance.damage);
+
+                
+
+                if(transform.position.x < col.transform.position.x){
+
+                    Vector2 verticalImpulse = Vector2.up * damageForce;
+                    rigidbody.AddForce(verticalImpulse, ForceMode2D.Impulse);
+
+                    Vector2 horizontalImpulse = Vector2.right * damageForce; 
+                    rigidbody.AddForce( horizontalImpulse, ForceMode2D.Impulse);
+
+                } else{
+                    Vector2 verticalImpulse = Vector2.up * damageForce;
+                    rigidbody.AddForce(verticalImpulse, ForceMode2D.Impulse);
+
+                    Vector2 horizontalImpulse = Vector2.left * damageForce; 
+                    rigidbody.AddForce( horizontalImpulse, ForceMode2D.Impulse);
+                }
+                StartCoroutine(BecomeMortal());
+            }
+            
         }
     }
 
@@ -135,6 +166,12 @@ public class Dragon : MonoBehaviour
         maxFlames = 2;
         isPowerUpActive = false;
 
+    }
+
+    IEnumerator BecomeMortal(){
+        yield return new WaitForSeconds(2);
+
+        invensibilityByDamage = false;
     }
 
 }
