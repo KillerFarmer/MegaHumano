@@ -2,27 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Flame : MonoBehaviour
+public class Arrow : MonoBehaviour
 {   
 
     public float speed = 15;
 
     public float direction = 0;
 
-    private Rigidbody2D RigidBody;
+    private Rigidbody2D rigidbody;
 
     // Start is called before the first frame update
     void Start()
     {
-        RigidBody = GetComponent<Rigidbody2D>();
-        RigidBody.velocity = Vector2.right * speed * direction;
+        rigidbody = GetComponent<Rigidbody2D>();
+        rigidbody.velocity = Vector2.right * speed * direction;
 
     }
 
 
     void OnBecameInvisible(){
 
-        Dragon.ShotFlames--;
+        Enemy.ShotFlames--;
         Destroy(gameObject);
         
     }
