@@ -9,6 +9,8 @@ public class SoundManager : MonoBehaviour
 
     public AudioClip jump;
     public AudioClip damage;
+    public AudioClip shoot;
+    public AudioClip death;
 
     private AudioSource soundEffectAudio;
 

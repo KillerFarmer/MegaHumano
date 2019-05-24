@@ -106,6 +106,7 @@ public class Dragon : MonoBehaviour
     
                 GameObject shoot = Instantiate(flame, transform.position, Quaternion.identity) as GameObject;
                 shoot.GetComponent<Flame>().direction = directionOfFlame;
+                SoundManager.Instance.PlayOneShot(SoundManager.Instance.shoot);
 
             } 
         
@@ -153,7 +154,7 @@ public class Dragon : MonoBehaviour
                 
                 invensibilityByDamage = true;
                 underDamage = true;
-                
+
                 if(HP > 0){
                     SoundManager.Instance.PlayOneShot(SoundManager.Instance.damage);
                 }
@@ -184,11 +185,13 @@ public class Dragon : MonoBehaviour
        
         GameObject shoot = Instantiate(poweUpFlame, transform.position, Quaternion.identity) as GameObject;
         shoot.GetComponent<Flame>().direction = directionOfFlame;
+        SoundManager.Instance.PlayOneShot(SoundManager.Instance.shoot);
 
         yield return new WaitForSeconds(0.1f);        
 
         GameObject shoot2 = Instantiate(poweUpFlame, transform.position, Quaternion.identity) as GameObject;
         shoot2.GetComponent<Flame>().direction = directionOfFlame;
+        SoundManager.Instance.PlayOneShot(SoundManager.Instance.shoot);
     }
 
     IEnumerator PowerUpTimeUp(){
@@ -202,7 +205,7 @@ public class Dragon : MonoBehaviour
 
     IEnumerator BecomeMortal(){
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         invensibilityByDamage = false;
     }
 
@@ -224,7 +227,7 @@ public class Dragon : MonoBehaviour
 
     IEnumerator Die(){
         dead = true;
-        Debug.Log("Here");
+        SoundManager.Instance.PlayOneShot(SoundManager.Instance.death);
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
@@ -233,7 +236,7 @@ public class Dragon : MonoBehaviour
     void FlipSprite(){
 
         if(facingRight && RigidBody.velocity.x < 0){
-
+            
             Vector3 scale = transform.localScale;
 		    scale.x *= -1;
 		    transform.localScale = scale; 
