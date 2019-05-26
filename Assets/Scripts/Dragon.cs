@@ -82,14 +82,19 @@ public class Dragon : MonoBehaviour
     void Update(){
 
         // Direction of Flames
-        if(Input.GetButtonDown("Horizontal")){
+        // if(Input.GetButtonDown("Horizontal")){
 
-            float temp = directionOfFlame;
-            directionOfFlame = Input.GetAxisRaw("Horizontal");
+        //     float temp = directionOfFlame;
+        //     directionOfFlame = Input.GetAxisRaw("Horizontal");
 
-            if(directionOfFlame == 0){
-                directionOfFlame = temp;
-            }
+        //     if(directionOfFlame == 0){
+        //         directionOfFlame = temp;
+        //     }
+        // }
+        if(facingRight){
+            directionOfFlame = 1;
+        } else{
+            directionOfFlame = -1;
         }
         
         
@@ -174,7 +179,7 @@ public class Dragon : MonoBehaviour
             
         }
 
-        if(HP <= 0 || col.gameObject.tag == "Fall"){
+        if((HP <= 0 || col.gameObject.tag == "Fall") && !dead){
 
             StartCoroutine(Die());
         }
