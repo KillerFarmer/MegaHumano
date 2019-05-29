@@ -22,7 +22,7 @@ public class Arrow : MonoBehaviour
 
     void OnBecameInvisible(){
 
-        Enemy.ShotFlames--;
+        Enemy2.ShotArrow--;
         Destroy(gameObject);
         
     }
