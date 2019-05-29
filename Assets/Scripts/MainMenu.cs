@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public void PlayGame(){
-        SceneManager.LoadScene("TestMovementScene");
+        SceneManager.LoadScene("lvl_1");
     }
 
 
