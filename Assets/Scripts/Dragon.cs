@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Dragon : MonoBehaviour
 {
-    public float HP = 30;
+    public float MaxHP = 30;
+    private float HP;
+    public Image healthBar;
 
     public float speed = 250.0f;
     public float jumpForce = 12.0f;
@@ -34,6 +37,7 @@ public class Dragon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        HP = MaxHP;
         RigidBody = GetComponent<Rigidbody2D>();
         boxcollider = GetComponent<BoxCollider2D>();
 
@@ -97,10 +101,6 @@ public class Dragon : MonoBehaviour
             directionOfFlame = -1;
         }
         
-        
-        // if(directionOfFlame == 0){
-        //     return;
-        // }
 
         // Shot a Flame without Power Up
         if(!isPowerUpActive){
@@ -156,6 +156,8 @@ public class Dragon : MonoBehaviour
                     HP = HP - 30;
                     Destroy(col.gameObject);
                 }
+
+                healthBar.fillAmount = Mathf.Abs(HP / MaxHP);
                 
                 invensibilityByDamage = true;
                 underDamage = true;
@@ -180,7 +182,7 @@ public class Dragon : MonoBehaviour
         }
 
         if((HP <= 0 || col.gameObject.tag == "Fall") && !dead){
-
+            healthBar.fillAmount = 0;
             StartCoroutine(Die());
         }
     }
