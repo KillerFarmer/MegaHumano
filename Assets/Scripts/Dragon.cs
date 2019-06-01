@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Dragon : MonoBehaviour
 {
-    public float MaxHP = 30;
+    public float MaxHP = 90;
     private float HP;
     public Image healthBar;
 

@@ -9,20 +9,27 @@ public class Arrow : MonoBehaviour
 
     public float direction = 0;
 
-    private Rigidbody2D rigidbody;
+    private Rigidbody2D RigidBody;
 
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
-        rigidbody.velocity = Vector2.right * speed * direction;
+        RigidBody = GetComponent<Rigidbody2D>();
+        RigidBody.velocity = Vector2.right * speed * direction;
 
+    }
+
+    void OnCollisionEnter2D(Collision2D col){
+        if(col.gameObject.tag == "Wall"){
+            Destroy(gameObject);
+        } else if(col.gameObject.tag == "Flame"){
+            Destroy(gameObject);
+        }
     }
 
 
     void OnBecameInvisible(){
 
-        Enemy2.ShotArrow--;
         Destroy(gameObject);
         
     }

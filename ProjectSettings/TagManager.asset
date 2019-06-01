@@ -8,6 +8,11 @@ TagManager:
   - Enemy
   - Death
   - Fall
+  - Axe
+  - Arrow
+  - Boss
+  - Flame
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -17,10 +22,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Dragon
+  - Enemy
+  - Flame
+  - Arrow
   - 
   - 
   - 

@@ -19,7 +19,11 @@ public class Flame : MonoBehaviour
 
     }
 
-
+    void OnCollisionEnter2D(Collision2D col){
+        if(col.gameObject.tag == "Arrow" || col.gameObject.tag == "Wall"){
+            Destroy(gameObject);
+        } 
+    }
     void OnBecameInvisible(){
 
         Dragon.ShotFlames--;

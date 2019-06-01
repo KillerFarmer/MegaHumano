@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+
+    public int HP = 3;
+
     public LayerMask enemyMask;
     public float speed = 1;
     Rigidbody2D myBody;
@@ -35,5 +38,21 @@ public class Enemy : MonoBehaviour
         Vector2 myVel = myBody.velocity;
         myVel.x = -myTrans.right.x * speed;
         myBody.velocity = myVel;
+    }
+
+
+
+    void OnCollisionEnter2D(Collision2D col){
+
+        if(col.gameObject.tag == "Flame"){
+            Destroy(col.gameObject);
+            HP -= 1;
+
+        }
+
+
+        if(HP <= 0){
+            Destroy(gameObject);
+        }
     }
 }
