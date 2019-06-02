@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UserInterface : MonoBehaviour
 {
 
-    private int seconds;
+    public int seconds;
 
     public GameObject TimerTag;
 

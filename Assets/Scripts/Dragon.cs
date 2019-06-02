@@ -27,9 +27,9 @@ public class Dragon : MonoBehaviour
     private BoxCollider2D boxcollider;
 
     private bool isPowerUpActive = false;
-    private bool invensibilityByDamage = false;
+    public bool invensibilityByDamage = false;
     private bool facingRight = true;
-    private bool underDamage = false;
+    public bool underDamage = false;
     private bool dead = false;
 
 

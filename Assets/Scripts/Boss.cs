@@ -20,6 +20,13 @@ public class Boss : MonoBehaviour
     private bool facingRight = false;
     Vector2 shootDir;
 
+
+    public GameObject score;
+    public GameObject dragon;
+    public GameObject ui;
+
+
+
     void Start()
     {
         myTrans = this.transform;
@@ -86,6 +93,24 @@ public class Boss : MonoBehaviour
         }
 
         if(HP <= 0){
+
+            int seconds = ui.GetComponent<UserInterface>().seconds;
+            int points = 1000 - seconds * 2;
+
+            if(points < 0){
+                points = 0;
+            }
+
+            // Comment to reset High Score
+            score.GetComponent<HighscoreTable>().AddHighscoreEntry(points);
+            score.GetComponent<HighscoreTable>().InitateScore();
+
+            //
+            score.SetActive(true);
+
+            dragon.GetComponent<Dragon>().invensibilityByDamage = true;
+            dragon.GetComponent<Dragon>().underDamage = true;
+
             Destroy(gameObject);
         }
     }
