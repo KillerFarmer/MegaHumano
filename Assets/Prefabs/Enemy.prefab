@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9487b4c0797c68c45ab78a464c216762, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f2ff707ec8b5b3942bd61a7ca0cb3465, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -141,7 +141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa97667980a17724faf0eefb1145218c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HP: 3
   enemyMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 23
   speed: 1

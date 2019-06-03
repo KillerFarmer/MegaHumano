@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2835938734259350860}
   - component: {fileID: 2835938734259350861}
   - component: {fileID: 2835938734259350858}
-  - component: {fileID: 940280554470714247}
+  - component: {fileID: 7680988354953944623}
   m_Layer: 9
   m_Name: Enemy2
   m_TagString: Enemy
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9487b4c0797c68c45ab78a464c216762, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f2ff707ec8b5b3942bd61a7ca0cb3465, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -129,7 +129,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &940280554470714247
+--- !u!114 &7680988354953944623
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,8 +138,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2835938734259350856}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec0ea83f19c80d64ca45812d419d6e8d, type: 3}
+  m_Script: {fileID: 11500000, guid: 356a10f381f664e48b86ce692830ae15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrow: {fileID: 401788869726921248, guid: 7197f5ff9b389e0458a538e6fb3d93e9, type: 3}
+  HP: 3
+  arrow: {fileID: 401788869726921248, guid: 53e454ed8572a0d4d8ea547bcb895b59, type: 3}
   lookleft: 0
