@@ -40,9 +40,6 @@ public class HighscoreTable : MonoBehaviour
 
         entryTemplate.gameObject.SetActive(false);
 
-
-        //AddHighscoreEntry(10000);
-
         string jsonString = PlayerPrefs.GetString("highscoreTable");
         Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
         highscoreEntryList = highscores.highscoreEntryList;
@@ -113,6 +110,7 @@ public class HighscoreTable : MonoBehaviour
     }
 
     public void AddHighscoreEntry(int score){
+
         HighscoreEntry highscoreEntry = new HighscoreEntry{score = score};
 
         string jsonString = PlayerPrefs.GetString("highscoreTable");
